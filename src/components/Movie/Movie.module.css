@@ -10,6 +10,12 @@
 
 .image {
     max-width: 300px;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 24px;
+    color: #d5d4d4;
 }
 
 .genre {
@@ -33,3 +39,7 @@
 	-webkit-box-orient: vertical;
 }
 
+.age {
+    margin-bottom: 15px;
+    color: #d5d4d4;
+}

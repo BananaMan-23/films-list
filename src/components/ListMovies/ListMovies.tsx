@@ -3,7 +3,7 @@ import axios from "axios";
 import Movie from "../Movie/Movie";
 import style from './ListMovies.module.css';
 
-interface Movie {
+interface Movi {
   id: number;
   title: string;
   background_image_original: string;
@@ -11,10 +11,11 @@ interface Movie {
   rating: number;
   runtime: number;
   summary: string;
+  year: string;
 }
 
 function ListMovies() {
-  const [listMovie, setListMovie] = useState<Movie[]>([]);
+  const [listMovie, setListMovie] = useState<Movi[]>([]);
 
   useEffect(() => {
     getMovies();
@@ -42,6 +43,7 @@ function ListMovies() {
           rating={movie.rating}
           runtime={movie.runtime}
           summary={movie.summary}
+          year={movie.year}
         />
       ))}
     </div>

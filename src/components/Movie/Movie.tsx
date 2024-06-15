@@ -9,6 +9,7 @@ interface MovieProps {
   rating: number;
   runtime: number;
   summary: string;
+  year: string
 }
 
 const Movie: React.FC<MovieProps> = ({
@@ -19,6 +20,7 @@ const Movie: React.FC<MovieProps> = ({
   rating,
   runtime,
   summary,
+  year
 }) => {
   return (
     <div className={style.container} key={id}>
@@ -31,6 +33,7 @@ const Movie: React.FC<MovieProps> = ({
       </div>
       <span className={style.rating}>Rating: {rating}</span>
       <span className={style.runtime}>Time: {runtime}</span>
+      <span className={style.age}>year: {year}</span>
       <p className={style.about}>{summary}</p>
     </div>
   );
