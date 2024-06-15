@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import logo from '../../img/film-logo.svg';
 import style from './Header.module.css';
 
-function Header() {
-  const [sortOption, setSortOption] = useState('');
+interface HeaderProps {
+  sortOption: string;
+  setSortOption: (value: string) => void;
+}
 
+function Header({ sortOption, setSortOption }: HeaderProps) {
   return (
     <header className={style.header}>
       <img className={style.logo} src={logo} alt="Logo" />
@@ -19,7 +22,7 @@ function Header() {
           </option>
           <option value="genre">По жанру</option>
           <option value="rating">По рейтингу</option>
-          <option value="age">По году выпуска</option>
+          <option value="year">По году выпуска</option>
         </select>
         <input
           className={style.input}
