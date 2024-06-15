@@ -7,8 +7,6 @@ interface MovieProps {
   background_image_original: string;
   genres: string[];
   rating: number;
-  runtime: number;
-  summary: string;
   year: string
 }
 
@@ -18,8 +16,6 @@ const Movie: React.FC<MovieProps> = ({
   background_image_original,
   genres,
   rating,
-  runtime,
-  summary,
   year
 }) => {
   return (
@@ -32,9 +28,7 @@ const Movie: React.FC<MovieProps> = ({
         ))}
       </div>
       <span className={style.rating}>Rating: {rating}</span>
-      <span className={style.runtime}>Time: {runtime}</span>
       <span className={style.age}>year: {year}</span>
-      <p className={style.about}>{summary}</p>
     </div>
   );
 };
