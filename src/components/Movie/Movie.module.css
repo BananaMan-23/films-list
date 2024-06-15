@@ -1,0 +1,35 @@
+.container {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    padding: 20px;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.image {
+    max-width: 300px;
+}
+
+.genre {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.runtime {
+    margin-bottom: 15px;
+}
+
+.rating {
+    color: gold;
+}
+.about {
+    overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+

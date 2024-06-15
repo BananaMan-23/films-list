@@ -1,0 +1,29 @@
+.logo {
+  width: 80px;
+  height: 80px;
+  max-width: 80px;
+  border-radius: 20px;
+}
+
+.header {
+  background-color: rgb(32, 32, 32);
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.select {
+  height: 25px;
+  max-height: 25px;
+  border-radius: 20px;
+  border: 1px solid blue;
+}
+
+.input {
+  width: 300px;
+  max-width: 300px;
+  border-radius: 15px;
+  border: 1px solid blue;
+  margin-left: 30px;
+}
