@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "../Movie/Movie";
 import Modal from "../Modal/Modal";
-import style from "./ListMovies.module.css";
+import styles from "./ListMovies.module.css";
 
 interface MovieDetails {
   id: number;
@@ -11,11 +11,14 @@ interface MovieDetails {
   genres: string[];
   rating: number;
   year: string;
-  runtime: number;
-  summary: string;
 }
 
-function ListMovies({ sortOption }: { sortOption: string }) {
+interface ListMoviesProps {
+  sortOption: string;
+  searchQuery: string;
+}
+
+const ListMovies: React.FC<ListMoviesProps> = ({ sortOption, searchQuery }) => {
   const [movies, setMovies] = useState<MovieDetails[]>([]);
   const [sortedMovies, setSortedMovies] = useState<MovieDetails[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,19 +65,23 @@ function ListMovies({ sortOption }: { sortOption: string }) {
   };
 
   return (
-    <div className={style.container}>
-      {sortedMovies.map((movie) => (
-        <div key={movie.id} onClick={() => handleMovieClick(movie)}>
-          <Movie
-            id={movie.id}
-            title={movie.title}
-            background_image_original={movie.background_image_original}
-            genres={movie.genres}
-            rating={movie.rating}
-            year={movie.year}
-          />
-        </div>
-      ))}
+    <div className={styles.container}>
+      {sortedMovies
+        .filter((movie) =>
+          movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .map((movie) => (
+          <div key={movie.id} onClick={() => handleMovieClick(movie)}>
+            <Movie
+              id={movie.id}
+              title={movie.title}
+              background_image_original={movie.background_image_original}
+              genres={movie.genres}
+              rating={movie.rating}
+              year={movie.year}
+            />
+          </div>
+        ))}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -82,6 +89,6 @@ function ListMovies({ sortOption }: { sortOption: string }) {
       />
     </div>
   );
-}
+};
 
 export default ListMovies;

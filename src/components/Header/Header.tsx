@@ -1,20 +1,23 @@
-import React from 'react';
-import logo from '../../img/film-logo.svg';
-import style from './Header.module.css';
+import React from "react";
+import logo from "../../img/film-logo.svg";
+import style from "./Header.module.css";
 
 interface HeaderProps {
   sortOption: string;
   setSortOption: (value: string) => void;
+  setSearchQuery: (value: string) => void;
+  searchQuery: string;
+
 }
 
-function Header({ sortOption, setSortOption }: HeaderProps) {
+function Header({ sortOption, setSortOption, searchQuery, setSearchQuery }: HeaderProps) {
   return (
     <header className={style.header}>
       <img className={style.logo} src={logo} alt="Logo" />
       <div>
-        <select 
+        <select
           className={style.select}
-          value={sortOption} 
+          value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
         >
           <option disabled value="">
@@ -28,6 +31,8 @@ function Header({ sortOption, setSortOption }: HeaderProps) {
           className={style.input}
           type="text"
           placeholder="Поиск по названию"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
     </header>
