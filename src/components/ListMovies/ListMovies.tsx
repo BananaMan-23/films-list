@@ -1,65 +1,85 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "../Movie/Movie";
-import style from './ListMovies.module.css';
+import Modal from "../Modal/Modal";
+import style from "./ListMovies.module.css";
 
-interface Movi {
+interface MovieDetails {
   id: number;
   title: string;
   background_image_original: string;
   genres: string[];
   rating: number;
   year: string;
+  runtime: number;
+  summary: string;
 }
 
 function ListMovies({ sortOption }: { sortOption: string }) {
-  const [listMovie, setListMovie] = useState<Movi[]>([]);
-  const [sortedMovies, setSortedMovies] = useState<Movi[]>([]);
+  const [movies, setMovies] = useState<MovieDetails[]>([]);
+  const [sortedMovies, setSortedMovies] = useState<MovieDetails[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
 
   useEffect(() => {
-    getMovies();
+    fetchMovies();
   }, [sortOption]);
 
-  async function getMovies() {
-    const {
-      data: {
-        data: { movies },
-      },
-    } = await axios.get("https://yts.mx/api/v2/list_movies.json?limit=50");
-    setListMovie(movies);
-  }
+  const fetchMovies = async () => {
+    try {
+      const response = await axios.get(
+        "https://yts.mx/api/v2/list_movies.json?limit=50"
+      );
+      const fetchedMovies = response.data.data.movies;
+      setMovies(fetchedMovies);
+      setSortedMovies([...fetchedMovies]);
+    } catch (error) {
+      console.error("Failed to fetch movies:", error);
+    }
+  };
 
   useEffect(() => {
-    let sortedList = [...listMovie];
+    let sortedList = [...movies];
     switch (sortOption) {
-      case 'genre':
+      case "genre":
         sortedList.sort((a, b) => a.genres[0].localeCompare(b.genres[0]));
         break;
-      case 'rating':
+      case "rating":
         sortedList.sort((a, b) => b.rating - a.rating);
         break;
-      case 'year':
+      case "year":
         sortedList.sort((a, b) => parseInt(b.year) - parseInt(a.year));
         break;
       default:
         break;
     }
     setSortedMovies(sortedList);
-  }, [sortOption, listMovie]);
+  }, [sortOption, movies]);
+
+  const handleMovieClick = (movie: MovieDetails) => {
+    setSelectedMovie(movie);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className={style.container}>
       {sortedMovies.map((movie) => (
-        <Movie
-          key={movie.id}
-          id={movie.id}
-          title={movie.title}
-          background_image_original={movie.background_image_original}
-          genres={movie.genres}
-          rating={movie.rating}
-          year={movie.year}
-        />
+        <div key={movie.id} onClick={() => handleMovieClick(movie)}>
+          <Movie
+            id={movie.id}
+            title={movie.title}
+            background_image_original={movie.background_image_original}
+            genres={movie.genres}
+            rating={movie.rating}
+            year={movie.year}
+          />
+        </div>
       ))}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        movie={selectedMovie}
+      />
     </div>
   );
 }
